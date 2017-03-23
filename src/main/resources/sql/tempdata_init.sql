@@ -1,0 +1,1 @@
+insert into tempdata(driverid, time, temperature) VALUES (1, '2017-3-13 16:48:50',30.23 );
