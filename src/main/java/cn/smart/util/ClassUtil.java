@@ -6,10 +6,13 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.JarURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 /**
  * Created by shu on 2017/3/22.
@@ -55,6 +58,23 @@ public class ClassUtil {
                         //用%20代替空格
                         String packagePath = url.getPath().replaceAll("%20", " ");
                         addClass(set, packagePath, packageName);
+                    } else if (protocol.equals("jar")) {
+                        JarURLConnection jarURLConnection = (JarURLConnection)url.openConnection();
+                        if (jarURLConnection != null) {
+                            JarFile  jarFile = jarURLConnection.getJarFile();
+                            if (jarFile != null) {
+                                Enumeration<JarEntry> jarEntrys = jarFile.entries();
+                                while (jarEntrys.hasMoreElements()) {
+                                    JarEntry jarEntry = jarEntrys.nextElement();
+                                    String jarEntryName = jarEntry.getName();
+                                    if (jarEntryName.endsWith(".class")) {
+                                        String className = jarEntryName.substring(0, jarEntryName.lastIndexOf("."))
+                                                .replaceAll("/", ".");
+                                        doAddClass(set, className);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }

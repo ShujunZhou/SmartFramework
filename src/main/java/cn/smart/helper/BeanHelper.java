@@ -14,9 +14,9 @@ public final class BeanHelper {
     private static final Map<Class<?>, Object> BEAN_MAP = new HashMap<>();
 
     static {
-        Set<Class<?>> set = ClassHelper.getBeanClsSet();
+        Set<Class<?>> set = ClassHelper.getBeanClsSet(); //获取类集合
             for (Class<?> cls : set) {
-                BEAN_MAP.put(cls, ReflectionUtil.newInstance(cls));
+                BEAN_MAP.put(cls, ReflectionUtil.newInstance(cls));//建立类和实例的映射关系
             }
     }
 
@@ -25,7 +25,7 @@ public final class BeanHelper {
         return BEAN_MAP;
     }
 
-    //获取Bean实例
+    //根据类名获取Bean实例
     public static <T> T getBean(Class<T> cls) {
         if (!BEAN_MAP.containsKey(cls)) {
             throw new RuntimeException("can not  get bean class :" + cls);
