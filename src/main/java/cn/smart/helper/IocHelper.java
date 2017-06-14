@@ -5,11 +5,8 @@ import cn.smart.util.ArrayUtil;
 import cn.smart.util.CollectionUtil;
 import cn.smart.util.ReflectionUtil;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by shu on 2017/3/24.

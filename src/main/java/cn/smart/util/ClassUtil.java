@@ -20,7 +20,6 @@ import java.util.jar.JarFile;
 //提供与类操作的相关的方法
 public class ClassUtil {
     private final static Logger LOGGER = LoggerFactory.getLogger(ClassUtil.class);
-
     //获取类加载器
     public static ClassLoader getClassLoader() {
         //获取当前线程的ClassLoader
