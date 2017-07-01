@@ -11,6 +11,7 @@ import java.util.List;
  * Created by shu on 2017/6/25.
  * 代理管理器
  */
+
 public class ProxyManager {
     @SuppressWarnings("unchecked")
     public static  <T> T createProxy(final Class<T> cls, final List<Proxy> proxyList) {
