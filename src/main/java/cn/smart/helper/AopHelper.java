@@ -1,8 +1,11 @@
 package cn.smart.helper;
 
 import cn.smart.annotation.Aspect;
+import cn.smart.annotation.Service;
+import cn.smart.proxy.AspectProxy;
 import cn.smart.proxy.Proxy;
 import cn.smart.proxy.ProxyManager;
+import cn.smart.proxy.TransactionProxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.lang.annotation.Annotation;
@@ -45,6 +48,8 @@ public final class AopHelper {
 
     private static Map<Class<?>, Set<Class<?>>> createProxyMap() throws Exception {
             Map<Class<?>, Set<Class<?>>> proxyMap = new HashMap<>();
+            addAspectproxy(proxyMap);
+            addTrasactionProxy(proxyMap);
             Set<Class<?>> proClassSet = ClassHelper.getClassSetBySuper(Aspect.class);
             for (Class<?> proxyClass : proClassSet) {
                 if (proxyClass.isAnnotationPresent(Aspect.class)) {
@@ -78,5 +83,19 @@ public final class AopHelper {
         }
 
         return targetMap;
+    }
+
+    private static void addAspectproxy(Map<Class<?>, Set<Class<?>>> proxyMap) throws Exception {
+        Set<Class<?>> proxyClassSet = ClassHelper.getClassSetBySuper(AspectProxy.class);
+        for (Class<?> proxyClass : proxyClassSet) {
+            Aspect aspect = proxyClass.getAnnotation(Aspect.class);
+            Set<Class<?>> targetClassSet = createTargetClassSet(aspect);
+            proxyMap.put(proxyClass, targetClassSet);
+        }
+    }
+
+    private static void addTrasactionProxy(Map<Class<?>, Set<Class<?>>> proxyMap) {
+        Set<Class<?>> serviceClasSet = ClassHelper.getClassSetByAnnotation(Service.class);
+        proxyMap.put(TransactionProxy.class, serviceClasSet);
     }
 }
