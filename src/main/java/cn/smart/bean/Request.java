@@ -5,8 +5,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * Created by shu on 2017/3/24.
+ *对请求消息的封装
  */
-//封装请求消息
+
 public class Request {
     //请求方法
     private String requestMethod;
